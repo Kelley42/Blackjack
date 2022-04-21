@@ -3,14 +3,12 @@ import os
 from art import logo
 
 # Set up with 2 cards each
-def deal(): # 1
-    #print("deal")
+def deal(): 
     """Deals a card and returns it"""
     cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
     return random.choice(cards)
 
-def hit_stay(player_cards, player_blackjack): # 4
-    #print("hit_stay")
+def hit_stay(player_cards, player_blackjack): 
     """Deals cards to player, returns player_sum"""
     # Sum up cards
     player_sum = sum_cards(player_cards)
@@ -24,7 +22,7 @@ def hit_stay(player_cards, player_blackjack): # 4
                 hit_stay_input = input("\nType 'y' to get another card or type 'n' to pass: ")
                 if hit_stay_input == 'y':
                     # Deal another card
-                    player_cards.append(deal()) # 5 returns updated_sum_player_num
+                    player_cards.append(deal()) 
                     # Sum up cards
                     player_sum = sum_cards(player_cards)
                     print(f"\nYour cards: {player_cards}")
@@ -39,8 +37,7 @@ def hit_stay(player_cards, player_blackjack): # 4
         return player_sum
     
 
-def sum_cards(hand): # 2
-    #print("sum_cards")
+def sum_cards(hand): 
     """Takes hand and returns sum_num"""
     sum_num = 0
     # Get values of cards and add to sum
@@ -54,7 +51,6 @@ def sum_cards(hand): # 2
     # If sum over 21, change A = 1 if Ace present
     if sum_num > 21:
         if "A" in hand:
-            #print("true ace")
             sum_num = 0
             # Value is 1 instead
             for i in hand:
@@ -67,8 +63,7 @@ def sum_cards(hand): # 2
     return sum_num
 
 
-def hit_comp(computer_cards): # 6
-    #print("hit_comp")
+def hit_comp(computer_cards): 
     """Deals cards to computer, returns computer_sum"""
     # Sum up cards
     computer_sum = sum_cards(computer_cards)
@@ -84,23 +79,20 @@ def hit_comp(computer_cards): # 6
     # If computer is under 17
     while computer_sum < 17:
         # Deal another card
-        computer_cards.append(deal()) # 5 returns updated_sum_player_num
+        computer_cards.append(deal()) 
         # Sum up cards
-        #print("hi")
         computer_sum = sum_cards(computer_cards)
         if computer_sum > 21:
             print(f"\nComputer's final hand: {computer_cards}")
             print(f"\nThe computer went over 21 - you win!")
             play_again()
         if computer_sum >= 17:
-            #print("oops")
             print(f"\nComputer's final hand: {computer_cards}")
             return computer_sum
     return computer_sum
      
 
 def play_game():
-    #print("play_game")
     """Runs game"""
     print(logo)
     game = True
@@ -111,25 +103,20 @@ def play_game():
         computer_cards = []
         # Deal 2 cards each to player and computer
         for x in range(2):
-            player_cards.append(deal()) # 1 returns new_card
-            computer_cards.append(deal()) # 3 returns new_card
+            player_cards.append(deal()) 
+            computer_cards.append(deal()) 
         # Show both player cards and first computer card
         print(f"\nYour cards: {player_cards}")
         print(f"\nComputer's first card: {next(iter(computer_cards))}")
         # Hit or stay
-        final_player_sum = hit_stay(player_cards, player_blackjack) # 4 returns sum_num
+        final_player_sum = hit_stay(player_cards, player_blackjack)
         # Computer's turn
-        #print("where are you")
-        final_computer_sum = hit_comp(computer_cards) # 6 returns final_sum_comp_num
-        #print("is this where")
+        final_computer_sum = hit_comp(computer_cards) 
         determine_winner(player_blackjack, computer_blackjack, final_player_sum, final_computer_sum)
 
 
 def determine_winner(player_blackjack, computer_blackjack, final_player_sum, final_computer_sum):
-    #print("determine_winner")
     """Takes sums and determines winner"""
-    #print(final_player_sum)
-    #print(final_computer_sum)
     if player_blackjack and computer_blackjack:
         print(f"\nTie! You and the computer both had Blackjacks!")
         play_again()
@@ -150,18 +137,15 @@ def determine_winner(player_blackjack, computer_blackjack, final_player_sum, fin
         play_again()
 
 
-
 def play_again():
     """Takes input on play again and returns answer"""
     while True:
         play_again_input = input("\nDo you want to play again? 'y' or 'n': ").lower()
-        #who_is_winner = determine_winner(player_blackjack, computer_blackjack, final_player_sum, final_computer_sum) # returns play_again input
         if play_again_input == 'n':
             game = False
             exit()
         elif play_again_input == 'y':
             os.system('clear')
-            #print("woohoo")
             play_game()
         else:
             print("Incorrect answer - please try again.")
